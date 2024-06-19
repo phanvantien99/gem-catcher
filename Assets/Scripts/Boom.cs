@@ -9,6 +9,10 @@ public class Boom : MonoBehaviour
 {
 
     [SerializeField] private bool _isReady;
+    [SerializeField] private GameObject _icon;
+    [SerializeField] private ParticleSystem _vfxExplosion;
+
+    [SerializeField] private AudioSource _soundExplosion;
     private Animator _animator;
     [SerializeField] private int _timeToReady;
     public bool IsReady { get => _isReady; set => _isReady = value; }
@@ -16,7 +20,7 @@ public class Boom : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _animator = gameObject.GetComponent<Animator>();
+        _animator = _icon.GetComponent<Animator>();
         StartCoroutine(countForReady());
     }
 
@@ -35,6 +39,9 @@ public class Boom : MonoBehaviour
                 GameManager manager = transform.parent.GetComponent<BoomSpawner>().GameManager;
                 if (manager)
                 {
+                    _icon.SetActive(false);
+                    _vfxExplosion.Play();
+                    _soundExplosion.Play();
                     manager.GameOver();
                 }
             }

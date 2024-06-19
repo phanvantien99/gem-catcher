@@ -34,11 +34,11 @@ public class ObstacleSpawner : MonoBehaviour
         float screenWidth = Camera.main.orthographicSize * Camera.main.aspect;
         // random from left to right or right to left
         bool coinIsHeads = Random.value < 0.5f;
-        
+
         // it's 6 unit from the center to the end of the prefabs 
         float positionX = 6;
-        float positionY = Random.Range(-screenHeight, screenHeight); 
-
+        float positionY = Random.Range(-screenHeight, screenHeight);
+        // change position Y to prevent Z-index
         if (coinIsHeads)
         {
             positionX += screenWidth;
