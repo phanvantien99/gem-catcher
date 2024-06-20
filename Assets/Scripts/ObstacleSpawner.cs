@@ -10,6 +10,8 @@ public class ObstacleSpawner : MonoBehaviour
 
     [SerializeField] private int _spawnInterval;
 
+    private float previosYLocate;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +40,16 @@ public class ObstacleSpawner : MonoBehaviour
         // it's 6 unit from the center to the end of the prefabs 
         float positionX = 6;
         float positionY = Random.Range(-screenHeight, screenHeight);
+        if (previosYLocate == 0)
+        {
+            previosYLocate = positionY;
+        }
+        else if (previosYLocate > 0 && positionY > 0 || previosYLocate < 0 && positionY < 0)
+        {
+            // if the previous wood is same side with current => change side Y
+            positionY *= -1;
+            previosYLocate = positionY;
+        }
         // change position Y to prevent Z-index
         if (coinIsHeads)
         {

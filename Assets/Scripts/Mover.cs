@@ -21,6 +21,7 @@ public class Mover : MonoBehaviour
     private bool _isGrounded;
 
     private Rigidbody2D _rb;
+    [SerializeField] private float screenWidth;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,7 @@ public class Mover : MonoBehaviour
         _gameManager = objectManager.GetComponent<GameManager>();
         _rb = GetComponent<Rigidbody2D>();
         _jumpRemaining = _timeToJump;
+        screenWidth = Camera.main.orthographicSize * Camera.main.aspect;
     }
 
     // Update is called once per frame
@@ -52,6 +54,16 @@ public class Mover : MonoBehaviour
         if (isMoving)
         {
             transform.position = new Vector2(transform.position.x + moveHorizontal, transform.position.y);
+        }
+
+        // move player to screen if out of sight
+        if (transform.position.x > screenWidth)
+        {
+            transform.position = new Vector2(-screenWidth, transform.position.y);
+        }
+        else if (transform.position.x < -screenWidth)
+        {
+            transform.position = new Vector2(screenWidth, transform.position.y);
         }
     }
 
